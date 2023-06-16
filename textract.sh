@@ -1,8 +1,8 @@
 #!/bin/bash
 
 current_dir=$(pwd)
-tmp_dir=${BASH_SOURCE[0]}
-script_dir=$(dirname "$tmp_dir")
+# tmp_dir=${BASH_SOURCE[0]}
+# script_dir=$(dirname "$tmp_dir")
 
 # if there is no value, give help and exit
 if [ $# -eq 0 ]; then
@@ -16,20 +16,13 @@ elif [ $# -eq 1 ]; then
 fi
 
 tex_file="$current_dir/$1"
+ex_ext="$2"
 
-cat "$tex_file" >/dev/null 2>&1 && echo "file found" || echo "file not found" && exit
-
-echo " tex_file is: $tex_file"
-# else
-#   echo "The provided file is not in the current directory"
-#fi
-
-echo "current dir is: $current_dir"
-echo "script dir is: $script_dir"
-sleep 10
-
-
-
+if cat "$tex_file" >/dev/null 2>&1; then
+    echo "file found"
+else 
+    echo "file not found" ; exit
+fi
 
 ##################################
 # Delete all files from precedent extractions
