@@ -17,16 +17,7 @@ fi
 
 tex_file="$current_dir/$1"
 
-# if current dir has current_dir/$1
-for filename in "$current_dir"/* ; do 
-    if [ -f "$filename" ]; then
-        if [ "$tex_file" == "$filename" ]; then
-            echo "there is a file with this name"
-        fi
-       echo "$filename did not match" 
-    fi
-done
-#
+cat "$tex_file" >/dev/null 2>&1 && echo "file found" || echo "file not found" && exit
 
 echo " tex_file is: $tex_file"
 # else
