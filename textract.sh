@@ -1,8 +1,6 @@
 #!/bin/bash
 
 current_dir=$(pwd)
-# tmp_dir=${BASH_SOURCE[0]}
-# script_dir=$(dirname "$tmp_dir")
 
 # if there is no value, give help and exit
 if [ $# -eq 0 ]; then
@@ -17,6 +15,7 @@ fi
 
 tex_file="$current_dir/$1"
 ex_ext="$2"
+output_dir="$3"
 
 if cat "$tex_file" >/dev/null 2>&1; then
     echo "file found"
@@ -24,11 +23,11 @@ else
     echo "file not found" ; exit
 fi
 
-##################################
-# Delete all files from precedent extractions
-##################################
-
-rm -rf output 
+if cd "$output_dir" >/dev/null 2>&1; then
+    echo "Output directory found"
+else 
+    echo "Output directory not found" ; exit
+fi
 
 ##################################
 #
@@ -149,7 +148,22 @@ sed -i 's/\\section{//' section.csv
 sed -i 's/\\subsection{//' section.csv
 sed -i 's/}//' section.csv
 
-mkdir output
+##################################
+#
+# prompt user
+# "Place the output in $output_dir: ? [y,n] 
+#
+##################################
+read -p "Place the output in $output_dir? [y/yes,n/no]: " answer
+
+lower_answer=$(echo "$answer" | tr '[:upper:]' '[:lower:]')
+
+# Check if the answer is "yes"
+if [[ "$lower_answer" == "y" || "$lower_answer" == "yes" ]]; then
+    echo "Extracting..."
+else
+    echo "Extraction aborted." ; exit
+fi
 
 #################################
 #
@@ -174,31 +188,31 @@ while IFS= read -r line; do
         substring2=${final_sec_name:0:5}
         
         # write to the model file
-        touch output/"$substring1"."$ex_ext"
-        sed -n "${start_point},${end_point}p" "$tex_file" >> output/"$substring1"."$ex_ext"
+        touch "$output_dir"/"$substring1"."$ex_ext"
+        sed -n "${start_point},${end_point}p" "$tex_file" >> "$output_dir"/"$substring1"."$ex_ext"
 
         # clean the model file
-        sed -i 's/\\end{verbatim}//' output/"$substring1"."$ex_ext"
-        sed -i 's/\\begin{verbatim}//' output/"$substring1"."$ex_ext"
+        sed -i 's/\\end{verbatim}//' "$output_dir"/"$substring1"."$ex_ext"
+        sed -i 's/\\begin{verbatim}//' "$output_dir"/"$substring1"."$ex_ext"
 
         # cp the model file
-        cp output/"$substring1"."$ex_ext" output/"$substring2"."$ex_ext"
+        cp "$output_dir"/"$substring1"."$ex_ext" "$output_dir"/"$substring2"."$ex_ext"
     elif (( sec_length <= 10 )); then
         substring1=${final_sec_name}
         substring2=${final_sec_name:0:5}
         substring3=${final_sec_name:0:10}
 
         # write to the model file
-        touch output/"$substring1"."$ex_ext"
-        sed -n "${start_point},${end_point}p" "$tex_file" >> output/"$substring1"."$ex_ext"
+        touch "$output_dir"/"$substring1"."$ex_ext"
+        sed -n "${start_point},${end_point}p" "$tex_file" >> "$output_dir"/"$substring1"."$ex_ext"
 
         # clean the model file
-        sed -i 's/\\end{verbatim}//' output/"$substring1"."$ex_ext"
-        sed -i 's/\\begin{verbatim}//' output/"$substring1"."$ex_ext"
+        sed -i 's/\\end{verbatim}//' "$output_dir"/"$substring1"."$ex_ext"
+        sed -i 's/\\begin{verbatim}//' "$output_dir"/"$substring1"."$ex_ext"
 
         # cp the model file
-        cp output/"$substring1"."$ex_ext" output/"$substring2"."$ex_ext"
-        cp output/"$substring1"."$ex_ext" output/"$substring3"."$ex_ext"
+        cp "$output_dir"/"$substring1"."$ex_ext" "$output_dir"/"$substring2"."$ex_ext"
+        cp "$output_dir"/"$substring1"."$ex_ext" "$output_dir"/"$substring3"."$ex_ext"
 
     elif (( sec_length <= 15 )); then
         substring1=${final_sec_name}
@@ -206,40 +220,38 @@ while IFS= read -r line; do
         substring3=${final_sec_name:0:10}
 
         # write to the model file
-        touch output/"$substring1"."$ex_ext"
-        sed -n "${start_point},${end_point}p" "$tex_file" >> output/"$substring1"."$ex_ext"
+        touch "$output_dir"/"$substring1"."$ex_ext"
+        sed -n "${start_point},${end_point}p" "$tex_file" >> "$output_dir"/"$substring1"."$ex_ext"
 
         # clean the model file
-        sed -i 's/\\end{verbatim}//' output/"$substring1"."$ex_ext"
-        sed -i 's/\\begin{verbatim}//' output/"$substring1"."$ex_ext"
+        sed -i 's/\\end{verbatim}//' "$output_dir"/"$substring1"."$ex_ext"
+        sed -i 's/\\begin{verbatim}//' "$output_dir"/"$substring1"."$ex_ext"
 
         # cp the model file
-        cp output/"$substring1"."$ex_ext" output/"$substring2"."$ex_ext"
-        cp output/"$substring1"."$ex_ext" output/"$substring3"."$ex_ext"
+        cp "$output_dir"/"$substring1"."$ex_ext" "$output_dir"/"$substring2"."$ex_ext"
+        cp "$output_dir"/"$substring1"."$ex_ext" "$output_dir"/"$substring3"."$ex_ext"
     else
         substring1=${final_sec_name}
         substring2=${final_sec_name:0:5}
         substring3=${final_sec_name:0:10}
 
         # write to the model file
-        touch output/"$substring1"."$ex_ext"
-        sed -n "${start_point},${end_point}p" "$tex_file" >> output/"$substring1"."$ex_ext"
+        touch "$output_dir"/"$substring1"."$ex_ext"
+        sed -n "${start_point},${end_point}p" "$tex_file" >> "$output_dir"/"$substring1"."$ex_ext"
 
         # clean the model file
-        sed -i 's/\\end{verbatim}//' output/"$substring1"."$ex_ext"
-        sed -i 's/\\begin{verbatim}//' output/"$substring1"."$ex_ext"
+        sed -i 's/\\end{verbatim}//' "$output_dir"/"$substring1"."$ex_ext"
+        sed -i 's/\\begin{verbatim}//' "$output_dir"/"$substring1"."$ex_ext"
 
         # cp the model file
-        cp output/"$substring1"."$ex_ext" output/"$substring2"."$ex_ext"
-        cp output/"$substring1"."$ex_ext" output/"$substring3"."$ex_ext"
+        cp "$output_dir"/"$substring1"."$ex_ext" "$output_dir"/"$substring2"."$ex_ext"
+        cp "$output_dir"/"$substring1"."$ex_ext" "$output_dir"/"$substring3"."$ex_ext"
     fi
 
-    # sed -n "${start_point},${end_point}p" "$tex_file" >> output/"$final_sec_name"."$ex_ext"
-    
     # clean up the new doc
 done < verbatim.csv
 
 rm section.csv verbatim.csv
 
-echo "Successfully created 'output' directory"
+echo "Successfully extracted in $output_dir"
 
