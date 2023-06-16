@@ -4,12 +4,12 @@
 current_dir=$(pwd)
 
 # Script location 
-script_dir=${BASH_SOURCE[0]}
+script_file=${BASH_SOURCE[0]}
 
 # Script full directory
-#tmp_dir=$(dirname "$script_dir")
+script_dir=$(dirname "$script_dir")
 #
-#read_path="$script_dir"/read.sh
+read_path="$script_dir"/read.sh
 
 # empty ARGS is given "--help"
 
@@ -26,6 +26,7 @@ case ${ARGS[0]} in
 
         if [ "${#ARGS[@]}" -ge 2 ]; then
             echo "ARGS count is greater or equal to 2"
+            $read_path "$2" "$1"
         else
             echo "ARGS count is smaller than 2"
         fi
