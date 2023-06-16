@@ -1,5 +1,9 @@
 #!/bin/bash
 
+current_dir=$(pwd)
+tmp_dir=${BASH_SOURCE[0]}
+script_dir=$(dirname "$tmp_dir")
+
 # if there is no value, give help and exit
 if [ $# -eq 0 ]; then
     echo "To extract verbatim content,"
@@ -9,9 +13,32 @@ elif [ $# -eq 1 ]; then
     echo "To extract verbatim content,"
     echo "Provide a .tex file as first argument."
     echo "Plus, a file extention as second argument." ; exit
-else
-    tex_file=$1 ex_ext=$2 ;
 fi
+
+tex_file="$current_dir/$1"
+
+# if current dir has current_dir/$1
+for filename in "$current_dir"/* ; do 
+    if [ -f "$filename" ]; then
+        if [ "$tex_file" == "$filename" ]; then
+            echo "there is a file with this name"
+        fi
+       echo "$filename did not match" 
+    fi
+done
+#
+
+echo " tex_file is: $tex_file"
+# else
+#   echo "The provided file is not in the current directory"
+#fi
+
+echo "current dir is: $current_dir"
+echo "script dir is: $script_dir"
+sleep 10
+
+
+
 
 ##################################
 # Delete all files from precedent extractions
