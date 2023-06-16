@@ -166,6 +166,10 @@ while IFS= read -r line; do
         touch output/"$substring1"."$ex_ext"
         sed -n "${start_point},${end_point}p" "$tex_file" >> output/"$substring1"."$ex_ext"
 
+        # clean the model file
+        sed -i 's/\\end{verbatim}//' output/"$substring1"."$ex_ext"
+        sed -i 's/\\begin{verbatim}//' output/"$substring1"."$ex_ext"
+
         # cp the model file
         cp output/"$substring1"."$ex_ext" output/"$substring2"."$ex_ext"
     elif (( sec_length <= 10 )); then
@@ -176,6 +180,10 @@ while IFS= read -r line; do
         # write to the model file
         touch output/"$substring1"."$ex_ext"
         sed -n "${start_point},${end_point}p" "$tex_file" >> output/"$substring1"."$ex_ext"
+
+        # clean the model file
+        sed -i 's/\\end{verbatim}//' output/"$substring1"."$ex_ext"
+        sed -i 's/\\begin{verbatim}//' output/"$substring1"."$ex_ext"
 
         # cp the model file
         cp output/"$substring1"."$ex_ext" output/"$substring2"."$ex_ext"
@@ -190,6 +198,10 @@ while IFS= read -r line; do
         touch output/"$substring1"."$ex_ext"
         sed -n "${start_point},${end_point}p" "$tex_file" >> output/"$substring1"."$ex_ext"
 
+        # clean the model file
+        sed -i 's/\\end{verbatim}//' output/"$substring1"."$ex_ext"
+        sed -i 's/\\begin{verbatim}//' output/"$substring1"."$ex_ext"
+
         # cp the model file
         cp output/"$substring1"."$ex_ext" output/"$substring2"."$ex_ext"
         cp output/"$substring1"."$ex_ext" output/"$substring3"."$ex_ext"
@@ -202,6 +214,10 @@ while IFS= read -r line; do
         touch output/"$substring1"."$ex_ext"
         sed -n "${start_point},${end_point}p" "$tex_file" >> output/"$substring1"."$ex_ext"
 
+        # clean the model file
+        sed -i 's/\\end{verbatim}//' output/"$substring1"."$ex_ext"
+        sed -i 's/\\begin{verbatim}//' output/"$substring1"."$ex_ext"
+
         # cp the model file
         cp output/"$substring1"."$ex_ext" output/"$substring2"."$ex_ext"
         cp output/"$substring1"."$ex_ext" output/"$substring3"."$ex_ext"
@@ -210,8 +226,6 @@ while IFS= read -r line; do
     # sed -n "${start_point},${end_point}p" "$tex_file" >> output/"$final_sec_name"."$ex_ext"
     
     # clean up the new doc
-    sed -i 's/\\end{verbatim}//' output/"$final_sec_name"."$ex_ext"
-    sed -i 's/\\begin{verbatim}//' output/"$final_sec_name"."$ex_ext"
 done < verbatim.csv
 
 rm section.csv verbatim.csv
