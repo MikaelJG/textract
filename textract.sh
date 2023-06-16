@@ -17,7 +17,7 @@ fi
 # Delete all files from precedent extractions
 ##################################
 
-rm -rf output ; rm verbatim.csv section.csv
+rm -rf output 
 
 ##################################
 #
@@ -153,13 +153,68 @@ while IFS= read -r line; do
     no_space_sec_name="${lowercase_sec_name// /_}"
     final_sec_name="${no_space_sec_name//[\(\)]/}"
 
-    touch output/"$final_sec_name"."$ex_ext"
-    sed -n "${start_point},${end_point}p" "$tex_file" >> output/"$final_sec_name"."$ex_ext"
+    sec_length=${#final_sec_name}
+
+    # bash string format
+    # ${string:start:length}
+
+    if (( sec_length <= 5 )); then
+        substring1=${final_sec_name}
+        substring2=${final_sec_name:0:5}
+        
+        # write to the model file
+        touch output/"$substring1"."$ex_ext"
+        sed -n "${start_point},${end_point}p" "$tex_file" >> output/"$substring1"."$ex_ext"
+
+        # cp the model file
+        cp output/"$substring1"."$ex_ext" output/"$substring2"."$ex_ext"
+    elif (( sec_length <= 10 )); then
+        substring1=${final_sec_name}
+        substring2=${final_sec_name:0:5}
+        substring3=${final_sec_name:0:10}
+
+        # write to the model file
+        touch output/"$substring1"."$ex_ext"
+        sed -n "${start_point},${end_point}p" "$tex_file" >> output/"$substring1"."$ex_ext"
+
+        # cp the model file
+        cp output/"$substring1"."$ex_ext" output/"$substring2"."$ex_ext"
+        cp output/"$substring1"."$ex_ext" output/"$substring3"."$ex_ext"
+
+    elif (( sec_length <= 15 )); then
+        substring1=${final_sec_name}
+        substring2=${final_sec_name:0:5}
+        substring3=${final_sec_name:0:10}
+
+        # write to the model file
+        touch output/"$substring1"."$ex_ext"
+        sed -n "${start_point},${end_point}p" "$tex_file" >> output/"$substring1"."$ex_ext"
+
+        # cp the model file
+        cp output/"$substring1"."$ex_ext" output/"$substring2"."$ex_ext"
+        cp output/"$substring1"."$ex_ext" output/"$substring3"."$ex_ext"
+    else
+        substring1=${final_sec_name}
+        substring2=${final_sec_name:0:5}
+        substring3=${final_sec_name:0:10}
+
+        # write to the model file
+        touch output/"$substring1"."$ex_ext"
+        sed -n "${start_point},${end_point}p" "$tex_file" >> output/"$substring1"."$ex_ext"
+
+        # cp the model file
+        cp output/"$substring1"."$ex_ext" output/"$substring2"."$ex_ext"
+        cp output/"$substring1"."$ex_ext" output/"$substring3"."$ex_ext"
+    fi
+
+    # sed -n "${start_point},${end_point}p" "$tex_file" >> output/"$final_sec_name"."$ex_ext"
     
     # clean up the new doc
     sed -i 's/\\end{verbatim}//' output/"$final_sec_name"."$ex_ext"
     sed -i 's/\\begin{verbatim}//' output/"$final_sec_name"."$ex_ext"
 done < verbatim.csv
+
+rm section.csv verbatim.csv
 
 echo "Successfully created 'output' directory"
 
