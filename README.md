@@ -1,7 +1,7 @@
 
 ![Logo](https://github.com/MikaelJG/noti/blob/master/assets/.png)
 
-Textract is a CLI tool to scape .tex files. It is the fastest example finder for lazy researchers.
+Textract is a CLI tool to scrape .tex files. It is the fastest example finder for lazy researchers.
 
 Textract works in harmony with [Noti](https://github.com/noti), my Note parser/editor CLI tool.
 
