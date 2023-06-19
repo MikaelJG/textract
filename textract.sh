@@ -3,25 +3,23 @@
 current_dir=$(pwd)
 
 # if there is no value, give help and exit
-if [ $# -eq 0 ]; then
-    echo "To extract verbatim content,"
-    echo "Provide a .tex file as first argument."
-    echo "Plus, a file extention as second argument." ; exit
-elif [ $# -eq 1 ]; then
+if [ $# -le 1 ]; then
     echo "To extract verbatim content,"
     echo "Provide a .tex file as first argument."
     echo "Plus, a file extention as second argument." ; exit
 fi
+# define and test arg 1 - the .tex file
 
 tex_file="$current_dir/$1"
-ex_ext="$2"
-output_dir="$3"
 
 if cat "$tex_file" >/dev/null 2>&1; then
     echo "file found"
 else 
     echo "file not found" ; exit
 fi
+
+ex_ext="$2"
+output_dir="$3"
 
 if cd "$output_dir" >/dev/null 2>&1; then
     echo "Output directory found"
@@ -32,7 +30,6 @@ fi
 ##################################
 #
 # Find the right section, given an array of line numbers
-#
 # This implementation is based on the two crystal ball algorithm puzzle.
 #
 # [120,149,220]
@@ -78,13 +75,17 @@ find_section() {
 ##################################
 #
 # Create verbatim.csv
-#
 # Format: Verbatim number, Start, End, Number of lines for Verbatim
 #
 ##################################
-#
+
+
+# This pattern should be relative
 awk '/begin{verbat/ { print NR }' "$tex_file" >> begin.txt
+
+# This pattern should be relative
 awk '/end{verbat/ { print NR }' "$tex_file" >> end.txt
+
 paste -d ',' begin.txt end.txt > both.csv 
 awk -F ',' '{result = $2 - $1; print $0 "," result}' both.csv >> no_num_verbatim.csv
 nl -w1 -s, no_num_verbatim.csv > verbatim.csv
@@ -94,7 +95,6 @@ rm begin.txt end.txt both.csv no_num_verbatim.csv
 ##################################
 #
 # Create section.csv
-#
 # Format: Section number, Start, Name of Section 
 #
 ##################################
