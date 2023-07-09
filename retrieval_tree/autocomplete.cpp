@@ -138,9 +138,3 @@ int main(int argc, char* argv[]) {
 
     return 0;
 }
-
-
-// C++17 // g++ -std=c++17 myfile.cpp -o output-name
-
-
-
