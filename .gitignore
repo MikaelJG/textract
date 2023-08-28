@@ -1,0 +1,9 @@
+# Vim swp files
+**/*.swp
+**/*.swo
+
+# Default output directory
+output/
+
+# Temporary csv files
+*.csv
