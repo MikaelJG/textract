@@ -5,7 +5,7 @@ Textract is a CLI tool to scrape .tex files. It is the fastest example finder fo
 
 ## Usage 
 
-Create a file for your \begin{verbatim} to \end{verbatim}  examples.
+Given a .tex file.
 
 ```
 \chapter{C++ Basics}
@@ -24,24 +24,15 @@ Create a file for your \begin{verbatim} to \end{verbatim}  examples.
     &&              and 
     ||              or
     !               not
-
-    if (hunger && anger){}
-
-    ( !true )       not false
-    ( !(10 < 11) )  not condition 
 \end{verbatim}
+```
+Create a file for your \begin{verbatim} to \end{verbatim} examples.
 
-\subsection{Scope}
-
-\begin{verbatim}
-run() {
-    {
-        inside scope 
-    {
-    
-}
-\end{verbatim}
-
+```
+├── examples 
+    ├── variable.
+    ├── logical_operators
+    ├── ...
 ```
 
 ```bash
