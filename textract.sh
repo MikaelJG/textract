@@ -132,7 +132,7 @@ awk -F '[:,]' '/%keywords/ {
     gsub(/ /, ",", line);
     gsub(/%keywords:/, "", line);
     printf "%d:%s\n", NR, line
-}' example.tex > keywords.csv
+}' $tex_file > keywords.csv
 
 ##################################
 #
