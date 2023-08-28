@@ -3,19 +3,19 @@
 
 Textract is a CLI tool to scrape .tex files. It is the fastest example finder for lazy researchers.
 
-## Usage 
+## Example
 
 Given a .tex file.
 
 ```
-\chapter{C++ Basics}
+\chapter{Basics}
 
 \section{Variables}
 
 \begin{verbatim}
-    int: integers                   // 4 bytes
-    double: floating-point numbers  // double 8 bytes
-    char: individual characters     // 1 byte
+    int: integers                   
+    double: floating-point numbers
+    char: individual characters   
 \end{verbatim}
 
 \subsection{Logical Operators}
@@ -35,21 +35,46 @@ Create a file for your \begin{verbatim} to \end{verbatim} examples.
     ├── ...
 ```
 
-```bash
-$ ./textract file-to-extract extension-for-the-ex-files
+## Usage
 
-# for example
+# Example 1
+
+Command line.
+
+```bash
 $ ./textract ruby.tex rb
 ```
-Noti-light finds the new extracted files and prints them (with cat).
-```bash
-$ ./textract file-to-extract extension-for-the-ex-files
 
-# for example
-$ ./textract ruby.tex rb
+Extracted.
+
+```
+├── examples 
+    ├── variable.rb
+    ├── logical_operators.rb
+    ├── ...
+```
+
+# Example 2
+
+Command line.
+
+```bash
+$ ./textract kubernetes.tex abc
+```
+
+Extracted.
+
+```
+├── examples 
+    ├── variable.abc
+    ├── logical_operators.abc
+    ├── ...
 ```
 
 ## Installation
+
+
+## Alias for textract
 
 In your home directory, create or update your .bashrc file.
 ```bash
