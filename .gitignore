@@ -4,3 +4,6 @@
 
 # Default output directory
 output/
+
+# Temporary csv files
+*.csv
