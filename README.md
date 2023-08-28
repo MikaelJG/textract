@@ -3,11 +3,60 @@
 
 Textract is a CLI tool to scrape .tex files. It is the fastest example finder for lazy researchers.
 
-Textract works in harmony with [Noti](https://github.com/noti), my note parser/editor CLI tool.
+## Usage 
 
-Included here is noti-light.sh. Provide a path to your file and it will print it for you.
+Create a file for your \begin{verbatim} to \end{verbatim}  examples.
 
-The perfect combo: extract in output directory and search the same dir with noti-light!
+```
+\chapter{C++ Basics}
+
+\section{Variables}
+
+\begin{verbatim}
+    int: integers                   // 4 bytes
+    double: floating-point numbers  // double 8 bytes
+    char: individual characters     // 1 byte
+\end{verbatim}
+
+\subsection{Logical Operators}
+
+\begin{verbatim}
+    &&              and 
+    ||              or
+    !               not
+
+    if (hunger && anger){}
+
+    ( !true )       not false
+    ( !(10 < 11) )  not condition 
+\end{verbatim}
+
+\subsection{Scope}
+
+\begin{verbatim}
+run() {
+    {
+        inside scope 
+    {
+    
+}
+\end{verbatim}
+
+```
+
+```bash
+$ ./textract file-to-extract extension-for-the-ex-files
+
+# for example
+$ ./textract ruby.tex rb
+```
+Noti-light finds the new extracted files and prints them (with cat).
+```bash
+$ ./textract file-to-extract extension-for-the-ex-files
+
+# for example
+$ ./textract ruby.tex rb
+```
 
 ## Installation
 
@@ -30,30 +79,6 @@ $ alias noti="~/path/to/noti-light.sh" # write an alias to noti-light.sh
 
 # for example
   alias noti="~/code/textract/textract.sh
-```
-## Usage 
-
-Textract extracts verbatim examples and creates an example directory (output) for them.
-```bash
-$ ./textract file-to-extract extension-for-the-ex-files
-
-# for example
-$ ./textract ruby.tex rb
-```
-Noti-light finds the new extracted files and prints them (with cat).
-```bash
-$ ./textract file-to-extract extension-for-the-ex-files
-
-# for example
-$ ./textract ruby.tex rb
-```
-
-The combo!!!
-```bash
-$ ./textract file-to-extract extension-for-the-ex-files && ./noti-light output/file.sh
-
-# for example
-$ ./textract ruby.tex rb && ./noti-light output/variables.rb
 ```
 
 ## Demo
