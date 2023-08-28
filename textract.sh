@@ -17,10 +17,11 @@ else
 fi
 
 # if there is no value, give help and exit
-if [ $# -lt 1 ]; then
+if [ $# -lt 2 ]; then
     echo "To extract verbatim content,"
     echo "Provide a .tex file as first argument."
-    echo "OPTIONAL: An output directory as a second argument (default: $default_output_dir)."; exit
+    echo "Plus, a file extention as second argument." ;
+    echo "OPTIONAL: An output directory as a third argument (default: $default_output_dir)."; exit
 fi
 # define and test arg 1 - the .tex file
 
@@ -32,8 +33,9 @@ else
     echo "file not found" ; exit
 fi
 
+ex_ext="$2"
 # If the second argument is not specified, use the default output dir
-output_dir="${2:-$default_output_dir}"
+output_dir="${3:-$default_output_dir}"
 
 if cd "$output_dir" >/dev/null 2>&1; then
     echo "Output directory found"
@@ -209,18 +211,17 @@ while IFS= read -r line; do
         substring2=${final_sec_name:0:5}
 
         # write to the model file
-        pwd
-        touch "$output_dir"/"$substring1"
-        sed -n "${start_point},${end_point}p" "$tex_file" >> "$output_dir"/"$substring1"
+        touch "$output_dir"/"$substring1".$ex_ext
+        sed -n "${start_point},${end_point}p" "$tex_file" >> "$output_dir"/"$substring1".$ex_ext
 
         # clean the model file
-        SED 's/\\end{verbatim}//' "$output_dir"/"$substring1"
-        SED 's/\\begin{verbatim}//' "$output_dir"/"$substring1"
+        SED 's/\\end{verbatim}//' "$output_dir"/"$substring1".$ex_ext
+        SED 's/\\begin{verbatim}//' "$output_dir"/"$substring1".$ex_ext
 
         # copy the model file as a link
         if [ "$substring1" != "$substring2" ]; then
-          rm -f $output_dir/$substring2
-          ln -s "$output_dir"/"$substring1" "$output_dir"/"$substring2"
+          rm -f $output_dir/$substring2.$ex_ext
+          ln -s "$output_dir"/"$substring1".$ex_ext "$output_dir"/"$substring2".$ex_ext
         fi
 
     elif (( sec_length <= 10 )); then
@@ -230,21 +231,21 @@ while IFS= read -r line; do
 
         # write to the model file
         pwd
-        touch "$output_dir"/"$substring1"
-        sed -n "${start_point},${end_point}p" "$tex_file" >> "$output_dir"/"$substring1"
+        touch "$output_dir"/"$substring1".$ex_ext
+        sed -n "${start_point},${end_point}p" "$tex_file" >> "$output_dir"/"$substring1".$ex_ext
 
         # clean the model file
-        SED 's/\\end{verbatim}//' "$output_dir"/"$substring1"
-        SED 's/\\begin{verbatim}//' "$output_dir"/"$substring1"
+        SED 's/\\end{verbatim}//' "$output_dir"/"$substring1".$ex_ext
+        SED 's/\\begin{verbatim}//' "$output_dir"/"$substring1".$ex_ext
 
         # copy the model file as a link
         if [ "$substring1" != "$substring2" ]; then
-          rm -f $output_dir/$substring2
-          ln -s "$output_dir"/"$substring1" "$output_dir"/"$substring2"
+          rm -f $output_dir/$substring2.$ex_ext
+          ln -s "$output_dir"/"$substring1".$ex_ext "$output_dir"/"$substring2".$ex_ext
         fi
         if [ "$substring1" != "$substring3" ]; then
-          rm -f $output_dir/$substring3
-          ln -s "$output_dir"/"$substring1" "$output_dir"/"$substring3"
+          rm -f $output_dir/$substring3.$ex_ext
+          ln -s "$output_dir"/"$substring1".$ex_ext "$output_dir"/"$substring3".$ex_ext
         fi
 
     elif (( sec_length <= 15 )); then
@@ -253,21 +254,21 @@ while IFS= read -r line; do
         substring3=${final_sec_name:0:10}
 
         # write to the model file
-        touch "$output_dir"/"$substring1"
-        sed -n "${start_point},${end_point}p" "$tex_file" >> "$output_dir"/"$substring1"
+        touch "$output_dir"/"$substring1".$ex_ext
+        sed -n "${start_point},${end_point}p" "$tex_file" >> "$output_dir"/"$substring1".$ex_ext
 
         # clean the model file
-        SED 's/\\end{verbatim}//' "$output_dir"/"$substring1"
-        SED 's/\\begin{verbatim}//' "$output_dir"/"$substring1"
+        SED 's/\\end{verbatim}//' "$output_dir"/"$substring1".$ex_ext
+        SED 's/\\begin{verbatim}//' "$output_dir"/"$substring1".$ex_ext
 
         # copy the model file as a link
         if [ "$substring1" != "$substring2" ]; then
-          rm -f $output_dir/$substring2
-          ln -s "$output_dir"/"$substring1" "$output_dir"/"$substring2"
+          rm -f $output_dir/$substring2.$ex_ext
+          ln -s "$output_dir"/"$substring1".$ex_ext "$output_dir"/"$substring2".$ex_ext
         fi
         if [ "$substring1" != "$substring3" ]; then
-          rm -f $output_dir/$substring3
-          ln -s "$output_dir"/"$substring1" "$output_dir"/"$substring3"
+          rm -f $output_dir/$substring3.$ex_ext
+          ln -s "$output_dir"/"$substring1".$ex_ext "$output_dir"/"$substring3".$ex_ext
         fi
     else
         substring1=${final_sec_name}
@@ -275,21 +276,21 @@ while IFS= read -r line; do
         substring3=${final_sec_name:0:10}
 
         # write to the model file
-        touch "$output_dir"/"$substring1"
-        sed -n "${start_point},${end_point}p" "$tex_file" >> "$output_dir"/"$substring1"
+        touch "$output_dir"/"$substring1".$ex_ext
+        sed -n "${start_point},${end_point}p" "$tex_file" >> "$output_dir"/"$substring1".$ex_ext
 
         # clean the model file
-        SED 's/\\end{verbatim}//' "$output_dir"/"$substring1"
-        SED 's/\\begin{verbatim}//' "$output_dir"/"$substring1"
+        SED 's/\\end{verbatim}//' "$output_dir"/"$substring1".$ex_ext
+        SED 's/\\begin{verbatim}//' "$output_dir"/"$substring1".$ex_ext
 
         # copy the model file as a link
         if [ "$substring1" != "$substring2" ]; then
-          rm -f $output_dir/$substring2
-          ln -s "$output_dir"/"$substring1" "$output_dir"/"$substring2"
+          rm -f $output_dir/$substring2.$ex_ext
+          ln -s "$output_dir"/"$substring1".$ex_ext "$output_dir"/"$substring2".$ex_ext
         fi
         if [ "$substring1" != "$substring3" ]; then
-          rm -f $output_dir/$substring3
-          ln -s "$output_dir"/"$substring1" "$output_dir"/"$substring3"
+          rm -f $output_dir/$substring3.$ex_ext
+          ln -s "$output_dir"/"$substring1".$ex_ext "$output_dir"/"$substring3".$ex_ext
         fi
     fi
 
