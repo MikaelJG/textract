@@ -1,5 +1,7 @@
 #!/bin/bash
-set -ex
+
+# Halt the script execution when an error is spotted
+set -e
 
 current_dir=$(pwd)
 default_output_dir="output"
@@ -21,7 +23,7 @@ if [ $# -lt 2 ]; then
     echo "To extract verbatim content,"
     echo "Provide a .tex file as first argument."
     echo "Plus, a file extention as second argument." ;
-    echo "OPTIONAL: An output directory as a third argument (default: $default_output_dir)."; exit
+    echo "OPTIONAL: An output directory as a third argument (default: $default_output_dir)."; exit 1
 fi
 # define and test arg 1 - the .tex file
 
@@ -30,7 +32,7 @@ tex_file="$current_dir/$1"
 if cat "$tex_file" >/dev/null 2>&1; then
     echo "file found"
 else
-    echo "file not found" ; exit
+    echo "file not found" ; exit 1
 fi
 
 ex_ext="$2"
@@ -39,7 +41,7 @@ output_dir="${3:-$default_output_dir}"
 
 if cd "$output_dir" >/dev/null 2>&1; then
     echo "Output directory found"
-    cd -
+    cd - > /dev/null
 else
     echo "Output directory ($output_dir) not found"
     read -p "I will attempt to create it. Press Enter to continue."
@@ -185,7 +187,7 @@ lower_answer=$(echo "$answer" | tr '[:upper:]' '[:lower:]')
 if [[ "$lower_answer" == "y" || "$lower_answer" == "yes" ]]; then
     echo "Extracting..."
 else
-    echo "Extraction aborted." ; exit
+    echo "Extraction aborted." ; exit 1
 fi
 
 #################################
@@ -230,7 +232,6 @@ while IFS= read -r line; do
         substring3=${final_sec_name:0:10}
 
         # write to the model file
-        pwd
         touch "$output_dir"/"$substring1".$ex_ext
         sed -n "${start_point},${end_point}p" "$tex_file" >> "$output_dir"/"$substring1".$ex_ext
 
