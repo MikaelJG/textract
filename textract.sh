@@ -124,7 +124,7 @@ rm begin.txt end.txt both.csv no_num_verbatim.csv
 #
 ##################################
 
-# Disclosure: I got this front ChatGPT.
+# Disclosure: I got this from ChatGPT.
 # https://chat.openai.com/share/ab176cb0-4878-4c03-8f3d-1f0f11f58fe6
 awk -F '[:,]' '/%keywords/ {
     line = $0;
