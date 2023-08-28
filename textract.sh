@@ -14,7 +14,7 @@ tex_file="$current_dir/$1"
 
 if cat "$tex_file" >/dev/null 2>&1; then
     echo "file found"
-else 
+else
     echo "file not found" ; exit
 fi
 
@@ -23,7 +23,7 @@ output_dir="$3"
 
 if cd "$output_dir" >/dev/null 2>&1; then
     echo "Output directory found"
-else 
+else
     echo "Output directory not found" ; exit
 fi
 
@@ -33,7 +33,7 @@ fi
 # This implementation is based on the two crystal ball algorithm puzzle.
 #
 # [120,149,220]
-# 
+#
 # if number is 135, finds section start at 120
 #
 ##################################
@@ -58,18 +58,18 @@ find_section() {
     local j
     for (( j = 0; j <= jmpAmount && i < length; j++, i++ )); do
         if (( section_start_a[i] > target )); then
-            
+
             i=$(( i - 1 ))
 
             section=${section_start_a[i]}
-            
+
             echo "$section"
             return
         fi
     done
 
     echo "-1"
-    
+
 }
 
 ##################################
@@ -86,7 +86,7 @@ awk '/begin{verbat/ { print NR }' "$tex_file" >> begin.txt
 # This pattern should be relative
 awk '/end{verbat/ { print NR }' "$tex_file" >> end.txt
 
-paste -d ',' begin.txt end.txt > both.csv 
+paste -d ',' begin.txt end.txt > both.csv
 awk -F ',' '{result = $2 - $1; print $0 "," result}' both.csv >> no_num_verbatim.csv
 nl -w1 -s, no_num_verbatim.csv > verbatim.csv
 
@@ -95,7 +95,7 @@ rm begin.txt end.txt both.csv no_num_verbatim.csv
 ##################################
 #
 # Create section.csv
-# Format: Section number, Start, Name of Section 
+# Format: Section number, Start, Name of Section
 #
 ##################################
 awk '/section/ { print NR "," $0 }' "$tex_file" >> no_num_section.csv
@@ -136,7 +136,7 @@ while IFS= read -r line; do
 
 done < verbatim.csv >> section.csv
 
-paste -d ',' verbatim.csv section.csv > best_verbatim.csv 
+paste -d ',' verbatim.csv section.csv > best_verbatim.csv
 
 rm verbatim.csv ; mv best_verbatim.csv verbatim.csv
 
@@ -151,7 +151,7 @@ sed -i 's/}//' section.csv
 ##################################
 #
 # prompt user
-# "Place the output in $output_dir: ? [y,n] 
+# "Place the output in $output_dir: ? [y,n]
 #
 ##################################
 read -p "Place the output in $output_dir? [y/yes,n/no]: " answer
@@ -186,7 +186,7 @@ while IFS= read -r line; do
     if (( sec_length <= 5 )); then
         substring1=${final_sec_name}
         substring2=${final_sec_name:0:5}
-        
+
         # write to the model file
         touch "$output_dir"/"$substring1"."$ex_ext"
         sed -n "${start_point},${end_point}p" "$tex_file" >> "$output_dir"/"$substring1"."$ex_ext"
