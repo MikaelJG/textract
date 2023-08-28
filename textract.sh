@@ -36,7 +36,7 @@ else
 fi
 
 ex_ext="$2"
-# If the second argument is not specified, use the default output dir
+# If the third argument is not specified, use the default output dir
 output_dir="${3:-$default_output_dir}"
 
 if cd "$output_dir" >/dev/null 2>&1; then
