@@ -351,7 +351,8 @@ while IFS= read -r line; do
     lowercase_sec_name=$(echo "$sec_name" | tr '[:upper:]' '[:lower:]')
     no_space_sec_name="${lowercase_sec_name// /_}"
     final_sec_name="${no_space_sec_name//[\(\)]/}"
-
+# We must loop over each keyword in the comma-separated `keywords` value. According to Chat GPT, the way to do this is using IFS. However, since in this scope we are already using IFS to parse the string to split by `:` (e.g. `%keywords:var,vars:Variables`), we have to juggle the IFS.
+# We save the old IFS, perform the loop over `keywords`, and then restore the original IFS.
     OLD_IFS=$IFS
     IFS=','
     read -ra elements <<< "$keywords"
