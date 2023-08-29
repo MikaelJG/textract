@@ -244,99 +244,24 @@ while IFS= read -r line; do
     no_space_sec_name="${lowercase_sec_name// /_}"
     final_sec_name="${no_space_sec_name//[\(\)]/}"
 
-    sec_length=${#final_sec_name}
+    # write to the model file
+    touch "$output_dir"/"$substring1".$ex_ext
+    sed -n "${start_point},${end_point}p" "$tex_file" >> "$output_dir"/"$substring1".$ex_ext
 
-    # bash string format
-    # ${string:start:length}
+    # clean the model file
+    SED 's/\\end{verbatim}//' "$output_dir"/"$substring1".$ex_ext
+    SED 's/\\begin{verbatim}//' "$output_dir"/"$substring1".$ex_ext
 
-    if (( sec_length <= 5 )); then
-        substring1=${final_sec_name}
-        substring2=${final_sec_name:0:5}
-
-        # write to the model file
-        touch "$output_dir"/"$substring1".$ex_ext
-        sed -n "${start_point},${end_point}p" "$tex_file" >> "$output_dir"/"$substring1".$ex_ext
-
-        # clean the model file
-        SED 's/\\end{verbatim}//' "$output_dir"/"$substring1".$ex_ext
-        SED 's/\\begin{verbatim}//' "$output_dir"/"$substring1".$ex_ext
-
-        # copy the model file as a link
-        if [ "$substring1" != "$substring2" ]; then
-          rm -f $output_dir/$substring2.$ex_ext
-          ln -s "$output_dir"/"$substring1".$ex_ext "$output_dir"/"$substring2".$ex_ext
-        fi
-
-    elif (( sec_length <= 10 )); then
-        substring1=${final_sec_name}
-        substring2=${final_sec_name:0:5}
-        substring3=${final_sec_name:0:10}
-
-        # write to the model file
-        touch "$output_dir"/"$substring1".$ex_ext
-        sed -n "${start_point},${end_point}p" "$tex_file" >> "$output_dir"/"$substring1".$ex_ext
-
-        # clean the model file
-        SED 's/\\end{verbatim}//' "$output_dir"/"$substring1".$ex_ext
-        SED 's/\\begin{verbatim}//' "$output_dir"/"$substring1".$ex_ext
-
-        # copy the model file as a link
-        if [ "$substring1" != "$substring2" ]; then
-          rm -f $output_dir/$substring2.$ex_ext
-          ln -s "$output_dir"/"$substring1".$ex_ext "$output_dir"/"$substring2".$ex_ext
-        fi
-        if [ "$substring1" != "$substring3" ]; then
-          rm -f $output_dir/$substring3.$ex_ext
-          ln -s "$output_dir"/"$substring1".$ex_ext "$output_dir"/"$substring3".$ex_ext
-        fi
-
-    elif (( sec_length <= 15 )); then
-        substring1=${final_sec_name}
-        substring2=${final_sec_name:0:5}
-        substring3=${final_sec_name:0:10}
-
-        # write to the model file
-        touch "$output_dir"/"$substring1".$ex_ext
-        sed -n "${start_point},${end_point}p" "$tex_file" >> "$output_dir"/"$substring1".$ex_ext
-
-        # clean the model file
-        SED 's/\\end{verbatim}//' "$output_dir"/"$substring1".$ex_ext
-        SED 's/\\begin{verbatim}//' "$output_dir"/"$substring1".$ex_ext
-
-        # copy the model file as a link
-        if [ "$substring1" != "$substring2" ]; then
-          rm -f $output_dir/$substring2.$ex_ext
-          ln -s "$output_dir"/"$substring1".$ex_ext "$output_dir"/"$substring2".$ex_ext
-        fi
-        if [ "$substring1" != "$substring3" ]; then
-          rm -f $output_dir/$substring3.$ex_ext
-          ln -s "$output_dir"/"$substring1".$ex_ext "$output_dir"/"$substring3".$ex_ext
-        fi
-    else
-        substring1=${final_sec_name}
-        substring2=${final_sec_name:0:5}
-        substring3=${final_sec_name:0:10}
-
-        # write to the model file
-        touch "$output_dir"/"$substring1".$ex_ext
-        sed -n "${start_point},${end_point}p" "$tex_file" >> "$output_dir"/"$substring1".$ex_ext
-
-        # clean the model file
-        SED 's/\\end{verbatim}//' "$output_dir"/"$substring1".$ex_ext
-        SED 's/\\begin{verbatim}//' "$output_dir"/"$substring1".$ex_ext
-
-        # copy the model file as a link
-        if [ "$substring1" != "$substring2" ]; then
-          rm -f $output_dir/$substring2.$ex_ext
-          ln -s "$output_dir"/"$substring1".$ex_ext "$output_dir"/"$substring2".$ex_ext
-        fi
-        if [ "$substring1" != "$substring3" ]; then
-          rm -f $output_dir/$substring3.$ex_ext
-          ln -s "$output_dir"/"$substring1".$ex_ext "$output_dir"/"$substring3".$ex_ext
-        fi
+    # copy the model file as a link
+    if [ "$substring1" != "$substring2" ]; then
+      rm -f $output_dir/$substring2.$ex_ext
+      ln -s "$output_dir"/"$substring1".$ex_ext "$output_dir"/"$substring2".$ex_ext
     fi
-
-    # clean up the new doc
+    if [ "$substring1" != "$substring3" ]; then
+      rm -f $output_dir/$substring3.$ex_ext
+      ln -s "$output_dir"/"$substring1".$ex_ext "$output_dir"/"$substring3".$ex_ext
+    fi
+    
 done < verbatim.csv
 
 #################################
