@@ -3,77 +3,14 @@
 
 Textract is a CLI tool to scrape .tex files. It is the fastest example finder for lazy researchers.
 
-### Example
-
-Given a .tex file.
-
-```
-\chapter{Basics}
-
-\section{Variables}
-
-\begin{verbatim}
-    int: integers                   
-    double: floating-point numbers
-    char: individual characters   
-\end{verbatim}
-
-\subsection{Logical Operators}
-
-\begin{verbatim}
-    &&              and 
-    ||              or
-    !               not
-\end{verbatim}
-```
-Create a file for your \begin{verbatim} to \end{verbatim} examples.
-
-```
-├── examples 
-    ├── variable.
-    ├── logical_operators
-    ├── ...
-```
-
 ## Usage
 
-### Example 1
-
-Command line.
+Given a .tex file, an extension and a path.
 
 ```bash
-$ ./textract ruby.tex rb
+$ ./textract ruby.tex rb ~/ruby/examples
 ```
-
-Extracted.
-
-```
-├── examples 
-    ├── variable.rb
-    ├── logical_operators.rb
-    ├── ...
-```
-
-### Example 2
-
-Command line.
-
-```bash
-$ ./textract kubernetes.tex abc
-```
-
-Extracted.
-
-```
-├── examples 
-    ├── variable.abc
-    ├── logical_operators.abc
-    ├── ...
-```
-
-## Keywords
-
-Use keywords and find your notes easily.
+From the ruby.tex file.
 
 ```
 \chapter{Basics}
@@ -86,30 +23,45 @@ Use keywords and find your notes easily.
     double: floating-point numbers
     char: individual characters   
 \end{verbatim}
+```
 
-\subsection{Logical Operators}
-%keywords:logic,logop,logicoperators
+The following examples will be extracted.
+
+```
+├── ruby
+    ├── examples 
+        ├── variable.rb
+        ├── vars -> /path/to/variables.abc
+        ├── var -> /path/to/variables.abc
+```
+
+### Both Keywords and Paths are optional
+
+Given a .tex file, an extension.
+
+```bash
+$ ./textract kubernetes.tex abc
+```
+
+From the kubernetes.tex file.
+
+```
+\chapter{Basics}
+
+\section{Variables}
 
 \begin{verbatim}
-    &&              and 
-    ||              or
-    !               not
+    int: integers                   
+    double: floating-point numbers
+    char: individual characters   
 \end{verbatim}
 ```
 
-Sym links will be created based on your keywords. 
+The following examples will be extracted.
 
 ```
 ├── examples 
     ├── variable.abc
-    ├── vars -> /path/to/variables.abc
-    ├── var -> /path/to/variables.abc
-    ├── logical_operators.abc
-    ├── logic -> /path/to/logical_operators.abc
-    ├── logop -> /path/to/logical_operators.abc
-    ├── logicoperators -> /path/to/logical_operators.abc
-    ├── ...
-
 ```
 
 ## Installation
