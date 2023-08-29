@@ -245,22 +245,12 @@ while IFS= read -r line; do
     final_sec_name="${no_space_sec_name//[\(\)]/}"
 
     # write to the model file
-    touch "$output_dir"/"$substring1".$ex_ext
-    sed -n "${start_point},${end_point}p" "$tex_file" >> "$output_dir"/"$substring1".$ex_ext
+    touch "$output_dir"/"$final_sec_name".$ex_ext
+    sed -n "${start_point},${end_point}p" "$tex_file" >> "$output_dir"/"$final_sec_name".$ex_ext
 
     # clean the model file
-    SED 's/\\end{verbatim}//' "$output_dir"/"$substring1".$ex_ext
-    SED 's/\\begin{verbatim}//' "$output_dir"/"$substring1".$ex_ext
-
-    # copy the model file as a link
-    if [ "$substring1" != "$substring2" ]; then
-      rm -f $output_dir/$substring2.$ex_ext
-      ln -s "$output_dir"/"$substring1".$ex_ext "$output_dir"/"$substring2".$ex_ext
-    fi
-    if [ "$substring1" != "$substring3" ]; then
-      rm -f $output_dir/$substring3.$ex_ext
-      ln -s "$output_dir"/"$substring1".$ex_ext "$output_dir"/"$substring3".$ex_ext
-    fi
+    SED 's/\\end{verbatim}//' "$output_dir"/"$final_sec_name".$ex_ext
+    SED 's/\\begin{verbatim}//' "$output_dir"/"$final_sec_name".$ex_ext
     
 done < verbatim.csv
 
