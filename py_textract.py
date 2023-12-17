@@ -78,38 +78,22 @@ else:
     sys.exit(1)
 
 if user_has_right_number_of_arguments:
+
     user_has_two_arguments = True
     user_first_argument = user_arguments[0]
     user_second_argument = user_arguments[1]
+
     if user_number_of_arguments == 3:
         user_has_two_arguments = False
         user_third_argument = user_arguments[2]
 
-if user_has_two_arguments:
-    arguments_data = [user_first_argument, user_second_argument]
-    arguments_context = [
-                            "Your first argument is: ",
-                            "Your second argument is: ",
-                        ]
-else:
-    arguments_data = [user_first_argument, user_second_argument, user_third_argument]
-    arguments_context = [
-                            "Your first argument is: ",
-                            "Your second argument is: ",
-                            "Your third argument is: ",
-                        ]
-
-print("")
-print("User arguments defined.")
-print("")
-ask_user_about(arguments_data, arguments_context, mandatory)
-
 
 # Define the first argument - the .tex file
 # Then, test the .tex file
+#
+#
 
-
-user_tex_filename = user_arguments[0]
+user_tex_filename = user_first_argument
 user_tex_filepath = current_directory / user_tex_filename
 tex_file_data = [user_tex_filename, user_tex_filepath]
 tex_file_context = [
@@ -119,10 +103,22 @@ tex_file_context = [
 print("")
 print("Tex file defined.")
 print("")
-ask_user_about(tex_file_data, tex_file_context, mandatory)
-
+ask_user_about(tex_file_data, tex_file_context, optional)
 
 # Define the second argument - the extension
+# 
+# 
+
+user_extension = user_second_argument
+user_extension_data = [user_extension]
+user_extension_context = [
+                    "The output files will have the extension: ",
+                   ]
+print("")
+print("User extension file defined.")
+print("")
+ask_user_about(user_extension_data, user_extension_context, mandatory)
+
 # Define the third argument - the path *Optional
 # 
 #
