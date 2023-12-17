@@ -67,7 +67,8 @@ user_number_of_arguments = len(user_arguments)
 
 if user_number_of_arguments == 2 or user_number_of_arguments == 3:
     user_has_right_number_of_arguments = True
-else
+else:
+    print("")
     print(f"You have given {user_number_of_arguments} command line arguments.")
     print("It is an invalid number, please revise.")
     print("Exiting...")
@@ -87,7 +88,7 @@ if user_has_two_arguments:
                             "Your first argument is: ",
                             "Your second argument is: ",
                         ]
-else
+else:
     arguments_data = [user_first_argument, user_second_argument, user_third_argument]
     arguments_context = [
                             "Your first argument is: ",
@@ -106,7 +107,7 @@ ask_user_about(arguments_data, arguments_context)
 
 
 user_tex_filename = user_arguments[0]
-user_tex_filepath = current_dir / user_tex_filename
+user_tex_filepath = current_directory / user_tex_filename
 tex_file_data = [user_tex_filename, user_tex_filepath]
 tex_file_context = [
                     "Your tex file name is: ",
@@ -115,7 +116,7 @@ tex_file_context = [
 print("")
 print("Tex file defined.")
 print("")
-ask_user_about(paths_data, paths_context)
+ask_user_about(tex_file_data, tex_file_context)
 
 
 # Define the second argument - the extension
