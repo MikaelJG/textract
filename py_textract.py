@@ -7,7 +7,9 @@ from pathlib import Path
 #
 #
 
-def ask_user_about(data, context):
+mandatory = True
+optional = False
+def ask_user_about(data, context, mandatory):
 
     if len(data) == len(context):
         for data_value, data_context in zip(data, context):
@@ -17,17 +19,18 @@ def ask_user_about(data, context):
         print("Please revise.")
         sys.exit(1)
 
-    user_input = input("Would you like to proceed? [Y/n]: ")
+    if mandatory:
+        user_input = input("Proceed? [Y/n]: ")
 
-    if user_input.lower() in ["yes", "y"]:
-        print("Proceeding...")
-    elif user_input.lower() in ["no", "n"]:
-        print("Exiting...")
-        sys.exit(1)
-    else:
-        print("Invalid input. Please enter 'Y/yes' or 'N/no'.")
-        print("Exiting...")
-        sys.exit(1)
+        if user_input.lower() in ["yes", "y"]:
+            print("Proceeding...")
+        elif user_input.lower() in ["no", "n"]:
+            print("Exiting...")
+            sys.exit(1)
+        else:
+            print("Invalid input. Please enter 'Y/yes' or 'N/no'.")
+            print("Exiting...")
+            sys.exit(1)
 
 
 # Define the paths needed to run this program
@@ -55,7 +58,7 @@ print("")
 # 
 # 
 
-ask_user_about(paths_data, paths_context)
+ask_user_about(paths_data, paths_context, optional) # optional gives false
 
 # Define the user's arguments
 # Make every piece of data as readable as possible
@@ -99,7 +102,7 @@ else:
 print("")
 print("User arguments defined.")
 print("")
-ask_user_about(arguments_data, arguments_context)
+ask_user_about(arguments_data, arguments_context, mandatory)
 
 
 # Define the first argument - the .tex file
@@ -116,7 +119,7 @@ tex_file_context = [
 print("")
 print("Tex file defined.")
 print("")
-ask_user_about(tex_file_data, tex_file_context)
+ask_user_about(tex_file_data, tex_file_context, mandatory)
 
 
 # Define the second argument - the extension
