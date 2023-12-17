@@ -65,19 +65,40 @@ ask_user_about(paths_data, paths_context)
 user_arguments = sys.argv[1:]
 user_number_of_arguments = len(user_arguments)
 
-if user_number_of_arguments == 2:
-    user_first_argument = user_arguments[0] 
-    user_second_argument = user_arguments[1] 
-else if user_number of arguments == 3:
-    user_first_argument = user_arguments[0] 
-    user_second_argument = user_arguments[1] 
+if user_number_of_arguments == 2 or user_number_of_arguments == 3:
+    user_has_right_number_of_arguments = True
 else
-    print(f"Your have given {user_number_of_arguments} command line arguments.")
+    print(f"You have given {user_number_of_arguments} command line arguments.")
     print("It is an invalid number, please revise.")
     print("Exiting...")
     sys.exit(1)
 
+if user_has_right_number_of_arguments:
+    user_has_two_arguments = True
+    user_first_argument = user_arguments[0]
+    user_second_argument = user_arguments[1]
+    if user_number_of_arguments == 3:
+        user_has_two_arguments = False
+        user_third_argument = user_arguments[2]
 
+if user_has_two_arguments:
+    arguments_data = [user_first_argument, user_second_argument]
+    arguments_context = [
+                            "Your first argument is: ",
+                            "Your second argument is: ",
+                        ]
+else
+    arguments_data = [user_first_argument, user_second_argument, user_third_argument]
+    arguments_context = [
+                            "Your first argument is: ",
+                            "Your second argument is: ",
+                            "Your third argument is: ",
+                        ]
+
+print("")
+print("User arguments defined.")
+print("")
+ask_user_about(arguments_data, arguments_context)
 
 
 # Define the first argument - the .tex file
