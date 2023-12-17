@@ -1,18 +1,58 @@
 import sys
 from pathlib import Path
 
+# Denine a 
+#
+#
+
+def ask_user_about(data, context):
+
+    if len(data) == len(context):
+        for data_value, data_context in zip(data, context):
+            print(context, path)
+    else:
+        print("your data is missing context")
+        print("Please revise")
+
+    user_input = input("Would you like to proceed? [Y/n]: ")
+        if user_input.lower() in ["yes", "y"]:
+            print("Proceeding...")
+        elif user_input.lower() in ["no", "n"]:
+            print("Exiting...")
+        else:
+            print("Invalid input. Please enter 'Y/yes' or 'N/no'.")
+
 # Define the paths needed to run this program
 # Give paths the easiest of names
 # This will help for the entire length of this program
 #
+#
 
 txtra_directory = Path.home() / ".txtra"
 current_directory = Path.cwd()
-default_output_directory= current_directory / "/output"
+default_output_directory = current_directory / "output"
+paths_data = [textra_directory, current_directory, default_output_directory]
+paths_context = [
+                    "Your textra directory is: ",
+                    "Your current directory is: ",
+                    "Your default output directory is:"
+                 ]
+
+
+# When something is defined,
+# Give the information to the user
+# 
+# 
+print("Paths are defined.")
+print(f"Your textra directory is: {txtra_directory}!")
+print("Paths are defined.")
+print(f"Hello, {name}!")
+
 
 # Define the first argument - the .tex file
 # Then, test the .tex file
 # 
+#
 
 user_arguments = sys.argv[1:]
 user_tex_file = current_dir / sys.argv[1]
