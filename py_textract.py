@@ -1,7 +1,9 @@
 import sys
 from pathlib import Path
 
-# Denine a 
+# Denine a general function to confirm data with the user
+# Give as much information as possible to the user
+# Facilitate testing
 #
 #
 
@@ -13,6 +15,7 @@ def ask_user_about(data, context):
     else:
         print("Your data is missing context.")
         print("Please revise.")
+        sys.exit(1)
 
     user_input = input("Would you like to proceed? [Y/n]: ")
 
@@ -20,8 +23,12 @@ def ask_user_about(data, context):
         print("Proceeding...")
     elif user_input.lower() in ["no", "n"]:
         print("Exiting...")
+        sys.exit(1)
     else:
         print("Invalid input. Please enter 'Y/yes' or 'N/no'.")
+        print("Exiting...")
+        sys.exit(1)
+
 
 # Define the paths needed to run this program
 # Give paths the easiest of names
@@ -50,16 +57,51 @@ print("")
 
 ask_user_about(paths_data, paths_context)
 
+# Define the user's arguments
+# Make every piece of data as readable as possible
+#
+#
+
+user_arguments = sys.argv[1:]
+user_number_of_arguments = len(user_arguments)
+
+if user_number_of_arguments == 2:
+    user_first_argument = user_arguments[0] 
+    user_second_argument = user_arguments[1] 
+else if user_number of arguments == 3:
+    user_first_argument = user_arguments[0] 
+    user_second_argument = user_arguments[1] 
+else
+    print(f"Your have given {user_number_of_arguments} command line arguments.")
+    print("It is an invalid number, please revise.")
+    print("Exiting...")
+    sys.exit(1)
+
+
+
 
 # Define the first argument - the .tex file
 # Then, test the .tex file
+
+
+user_tex_filename = user_arguments[0]
+user_tex_filepath = current_dir / user_tex_filename
+tex_file_data = [user_tex_filename, user_tex_filepath]
+tex_file_context = [
+                    "Your tex file name is: ",
+                    "Your tex file path is: ",
+                 ]
+print("")
+print("Tex file defined.")
+print("")
+ask_user_about(paths_data, paths_context)
+
+
+# Define the second argument - the extension
+# Define the third argument - the path *Optional
 # 
 #
 
-# user_arguments = sys.argv[1:]
-# user_tex_file = current_dir / sys.argv[1]
-# 
-# 
 # 
 # 
 # #
