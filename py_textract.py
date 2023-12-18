@@ -89,21 +89,18 @@ if user_has_right_number_of_arguments:
 
 
 # Define the first argument - the .tex file
-# Then, test the .tex file
 #
 #
 
 user_tex_filename = user_first_argument
 user_tex_filepath = current_directory / user_tex_filename
+user_tex_file = user_tex_filepath
 tex_file_data = [user_tex_filename, user_tex_filepath]
 tex_file_context = [
                     "Your tex file name is: ",
                     "Your tex file path is: ",
                  ]
-print("")
-print("Tex file defined.")
-print("")
-ask_user_about(tex_file_data, tex_file_context, optional)
+
 
 # Define the second argument - the extension
 # 
@@ -114,49 +111,48 @@ user_extension_data = [user_extension]
 user_extension_context = [
                     "The output files will have the extension: ",
                    ]
-print("")
-print("User extension file defined.")
-print("")
-ask_user_about(user_extension_data, user_extension_context, mandatory)
 
 # Define the third argument - the path *Optional
 # 
 #
 
-# 
-# 
-# #
-# # Define the SED function based on the platform
-# # Mac and linux do not use the same SED function
-# # darwin is Mac
-# #
-# 
-# def SED(pattern, file_path):
-#     if sys.platform == "darwin":
-#         sed_command = ["sed", "-i", "", pattern, file_path]
-#     else:
-#         sed_command = ["sed", "-i", pattern, file_path]
-#     return sed_command
-# 
-# #
-# # Check the number of arguments
-# #
-# 
-# if len(sys.argv) < 2:
-#     default_output_dir = "your_default_output_dir"
-#     print("To extract verbatim content,")
-#     print("Provide a .tex file as the first argument.")
-#     print(f"Plus, a file extension as the second argument.")
-#     print(f"OPTIONAL: An output directory as a third argument (default: {default_output_dir}).")
-#     sys.exit(1)
-# 
-# if tex_file.is_file():
-#     print("File found")
-# else:
-#     print("File not found")
-#     sys.exit(1)
-# 
-# 
+if not user_has_two_arguments:
+    user_has_three_arguments = True
+    user_output_directory = user_third_argument
+    user_output_directory_data = [user_output_directory]
+    user_output_directory_context = [
+                            "The output directory is: ",
+                            ]
+
+print("")
+print("Tex file, output extension and output directory defined")
+print("")
+ask_user_about(tex_file_data, tex_file_context, optional)
+ask_user_about(user_extension_data, user_extension_context, optional)
+ask_user_about(user_output_directory_data, user_output_directory_context, mandatory)
+
+# Prove the user_tex_file exists
+#
+#
+
+user_tex_file = user_tex_filepath
+
+if user_tex_file.is_file():
+    user_tex_file_exists = True
+
+if user_has_three_arguments
+    if user_output_directory.is_dir():
+        user_output_directory_exists = True
+    else:
+        print("User output directory was not found.")
+        print("I will attempts to create it.")
+        directory_path.mkdir(parents=True, exist_ok=True)
+
+
+
+        
+    
+
 # ex_ext="$2"
 # # If the third argument is not specified, use the default output dir
 # output_dir="${3:-$default_output_dir}"
@@ -409,4 +405,16 @@ ask_user_about(user_extension_data, user_extension_context, mandatory)
 # 
 # 
 # echo "Successfully extracted in $output_dir"
+# 
+# # Define the SED function based on the platform
+# # Mac and linux do not use the same SED function
+# # darwin is Mac
+# #
+# 
+# def SED(pattern, file_path):
+#     if sys.platform == "darwin":
+#         sed_command = ["sed", "-i", "", pattern, file_path]
+#     else:
+#         sed_command = ["sed", "-i", pattern, file_path]
+#     return sed_command
 # 
