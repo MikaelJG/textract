@@ -118,7 +118,7 @@ user_extension_context = [
 
 if not user_has_two_arguments:
     user_has_three_arguments = True
-    user_output_directory = user_third_argument
+    user_output_directory = current_directory / user_third_argument
     user_output_directory_data = [user_output_directory]
     user_output_directory_context = [
                             "The output directory is: ",
@@ -140,13 +140,13 @@ user_tex_file = user_tex_filepath
 if user_tex_file.is_file():
     user_tex_file_exists = True
 
-if user_has_three_arguments
+if user_has_three_arguments:
     if user_output_directory.is_dir():
         user_output_directory_exists = True
     else:
         print("User output directory was not found.")
         print("I will attempts to create it.")
-        directory_path.mkdir(parents=True, exist_ok=True)
+        user_output_directory.mkdir(parents=True, exist_ok=True)
 
 
 
