@@ -139,6 +139,11 @@ user_tex_file = user_tex_filepath
 
 if user_tex_file.is_file():
     user_tex_file_exists = True
+else:
+    print("The user tex file was not found.")
+    print("Please revise.")
+    sys.exit(1)
+    
 
 if user_has_three_arguments:
     if user_output_directory.is_dir():
@@ -147,6 +152,15 @@ if user_has_three_arguments:
         print("User output directory was not found.")
         print("I will attempts to create it.")
         user_output_directory.mkdir(parents=True, exist_ok=True)
+        
+        if user_output_directory.is_dir():
+            print("It worked.")
+            print("Proceeding..")
+        else:
+            print("It failed.")
+            print("Please revise.")
+            sys.exit(1)
+            
 
 
 
