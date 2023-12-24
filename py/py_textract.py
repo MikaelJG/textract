@@ -1,5 +1,6 @@
 import sys
 from pathlib import Path
+import math
 
 # Denine a general function to confirm data with the user
 # Give as much information as possible to the user
@@ -32,6 +33,45 @@ def ask_user_about(data, context, mandatory):
             print("Exiting...")
             sys.exit(1)
 
+# ##################################
+# #
+# # Find the right section, given an array of line numbers
+# # This implementation is based on the two crystal ball algorithm puzzle.
+# #
+# # [120,149,220]
+# #
+# # if number is 135, finds section start at 120
+# #
+# ##################################
+
+def find_section(target, section_start_a):
+    length = len(section_start_a)
+    sqrt_length = int(math.sqrt(length))
+    jmp_amount = int((sqrt_length + 0.5) // 1)
+
+    i = jmp_amount
+
+    while i < length:
+        if section_start_a[i] > target:
+            break
+        i += jmp_amount
+
+    i -= jmp_amount
+
+    for j in range(jmp_amount + 1):
+        if i < length and section_start_a[i] > target:
+            i -= 1
+            section = section_start_a[i]
+            return section
+        i += 1
+
+    return -1
+
+
+# Example usage:
+# sections = [10, 20, 30, 40, 50, 60, 70, 80, 90]
+# result = find_section(45, sections)
+# print(result)
 
 # Define the paths needed to run this program
 # Give paths the easiest of names
@@ -116,9 +156,19 @@ user_extension_context = [
 # 
 #
 
+
+
 if not user_has_two_arguments:
     user_has_three_arguments = True
+
+if user_has_three_arguments:
     user_output_directory = current_directory / user_third_argument
+    user_output_directory_data = [user_output_directory]
+    user_output_directory_context = [
+                            "The output directory is: ",
+                            ]
+else:
+    user_output_directory = default_output_directory
     user_output_directory_data = [user_output_directory]
     user_output_directory_context = [
                             "The output directory is: ",
@@ -160,73 +210,8 @@ if user_has_three_arguments:
             print("It failed.")
             print("Please revise.")
             sys.exit(1)
-            
 
 
-
-        
-    
-
-# ex_ext="$2"
-# # If the third argument is not specified, use the default output dir
-# output_dir="${3:-$default_output_dir}"
-# 
-# if cd "$output_dir" >/dev/null 2>&1; then
-#     echo "Output directory found"
-#     cd - > /dev/null
-# else
-#     echo "Output directory ($output_dir) not found. I will attempt to create it."
-#     mkdir -p $output_dir
-#     if [ $? -ne 0 ]; then
-#       echo "Error: I was unable to create the directory."
-#       exit 1  # Exit the script with a non-zero exit code
-#     fi
-# fi
-# 
-# ##################################
-# #
-# # Find the right section, given an array of line numbers
-# # This implementation is based on the two crystal ball algorithm puzzle.
-# #
-# # [120,149,220]
-# #
-# # if number is 135, finds section start at 120
-# #
-# ##################################
-# 
-# find_section() {
-#     target=$1
-#     length=${#section_start_a[@]}
-#     sqrtLength=$(echo "sqrt($length)" | bc)
-#     jmpAmount=$(echo "($sqrtLength + 0.5) / 1" | bc)
-# 
-#     i=$jmpAmount
-# 
-#     while (( i < length )); do
-#         if (( section_start_a[i] > target )); then
-#             break
-#         fi
-#         i=$((i + jmpAmount))
-#     done
-# 
-#     i=$((i - jmpAmount))
-# 
-#     local j
-#     for (( j = 0; j <= jmpAmount && i < length; j++, i++ )); do
-#         if (( section_start_a[i] > target )); then
-# 
-#             i=$(( i - 1 ))
-# 
-#             section=${section_start_a[i]}
-# 
-#             echo "$section"
-#             return
-#         fi
-#     done
-# 
-#     echo "-1"
-# 
-# }
 # 
 # ##################################
 # #
