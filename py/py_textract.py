@@ -92,15 +92,6 @@ def extract_verbatim_sentences(starting_line, verbatim_length):
 
     return sentences[:verbatim_length]
 
-# Example usage:
-file_name = 'your_text_file.txt'  # Replace with your actual file name
-starting_line = 2  # Replace with the starting line number
-num_sentences = 5  # Replace with the number of sentences to extract
-
-resulting_sentences = extract_sentences_after_line(file_name, starting_line, num_sentences)
-print(resulting_sentences)
-
-
 # Define the paths needed to run this program
 # Give paths the easiest of names
 # This will help for the entire length of this program
@@ -272,10 +263,16 @@ else:
 verbatim_lengths = [(ending_lines_numbers[i] - 1) - beginning_lines_numbers[i] for i in range(number_of_verbatim)]
 
 
+extract_verbatim_sentences(starting_line, verbatim_length):
 
+verbatim_sentences = []
+idx = 0
+for num in verbatim_lengths:
+    sentences = extract_sentences_after_line(beginning_lines_numbers[idx], num)
+    verbatim_sentences.append(sentences)
+    idx += 1
 
-
-
+print(verbatim_sentences)
 
 # ##################################
 # #
