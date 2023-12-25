@@ -78,6 +78,7 @@ def find_section(target, section_start_a):
 
     return -1
 
+
 def extract_verbatim_sentences(starting_line, verbatim_length):
     sentences = []
     with open(user_tex_file, 'r') as file:
@@ -91,6 +92,7 @@ def extract_verbatim_sentences(starting_line, verbatim_length):
                 break
 
     return sentences[:verbatim_length]
+
 
 # Define the paths needed to run this program
 # Give paths the easiest of names
@@ -263,12 +265,10 @@ else:
 verbatim_lengths = [(ending_lines_numbers[i] - 1) - beginning_lines_numbers[i] for i in range(number_of_verbatim)]
 
 
-extract_verbatim_sentences(starting_line, verbatim_length):
-
 verbatim_sentences = []
 idx = 0
 for num in verbatim_lengths:
-    sentences = extract_sentences_after_line(beginning_lines_numbers[idx], num)
+    sentences = extract_verbatim_sentences(beginning_lines_numbers[idx], num)
     verbatim_sentences.append(sentences)
     idx += 1
 
