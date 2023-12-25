@@ -216,18 +216,10 @@ if user_has_three_arguments:
             print("Please revise.")
             sys.exit(1)
 
+# Find the verbatim sections in the user tex file
+#
+#
 
-# 
-# ##################################
-# #
-# # Create verbatim.csv
-# # Format: Verbatim number, Start, End, Number of lines for Verbatim
-# #
-# ##################################
-# 
-# 
-# # This pattern should be relative
-# awk '/begin{verbat/ { print NR }' "$tex_file" >> begin.txt
 
 begin_verbatim_pattern = 'begin{verbatim}'
 end_verbatim_pattern = 'end{verbatim}'
@@ -238,28 +230,26 @@ with open(user_tex_file, 'r') as file:
 with open(user_tex_file, 'r') as file:
     ending_lines_numbers = [str(idx) for idx, line in enumerate(file, start=1) if end_verbatim_pattern in line]
 
-for line in beginning_lines_numbers:
-    print("one begins with")
-    print(line)
-    print("")
+# calculate the lengths of the verbatim
+# Find the start and the end line of the verbatim
+# Substract
+# 
+#
 
-for line in ending_lines_numbers:
-    print("one ends with")
-    print(line)
-    print("")
+number_of_verbatim_beginnings = len(beginning_lines_numbers)
+number_of_verbatim_endings = len(ending_lines_numbers)
 
+if not number_of_verbatim_beginnings == number_of_verbatim_endings:
+    print("Your number of beginning verbatims do not match the ends.")
+    print("Please revise.")
+    sys.exit(1)
+else:
+    number_of_verbatim = number_of_verbatim_beginnings
 
-# 
-# # This pattern should be relative
-# awk '/end{verbat/ { print NR }' "$tex_file" >> end.txt
-# 
-# paste -d ',' begin.txt end.txt > both.csv
-# awk -F ',' '{result = $2 - $1; print $0 "," result}' both.csv >> no_num_verbatim.csv
-# nl -w1 -s, no_num_verbatim.csv > verbatim.csv
-# 
-# rm begin.txt end.txt both.csv no_num_verbatim.csv
-# 
-# 
+verbatim_lengths = [ending_lines_numbers[i] - beginning_lines_numbers[i] for i in range(number_of_verbatim)]
+
+print(verbatim_lengths)
+
 # ##################################
 # #
 # # Create keywords.csv
