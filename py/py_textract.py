@@ -225,10 +225,10 @@ begin_verbatim_pattern = 'begin{verbatim}'
 end_verbatim_pattern = 'end{verbatim}'
 
 with open(user_tex_file, 'r') as file:
-    beginning_lines_numbers = [str(idx) for idx, line in enumerate(file, start=1) if begin_verbatim_pattern in line]
+    beginning_lines_numbers = [int(idx) for idx, line in enumerate(file, start=1) if begin_verbatim_pattern in line]
 
 with open(user_tex_file, 'r') as file:
-    ending_lines_numbers = [str(idx) for idx, line in enumerate(file, start=1) if end_verbatim_pattern in line]
+    ending_lines_numbers = [int(idx) for idx, line in enumerate(file, start=1) if end_verbatim_pattern in line]
 
 # calculate the lengths of the verbatim
 # Find the start and the end line of the verbatim
@@ -239,14 +239,14 @@ with open(user_tex_file, 'r') as file:
 number_of_verbatim_beginnings = len(beginning_lines_numbers)
 number_of_verbatim_endings = len(ending_lines_numbers)
 
-if not number_of_verbatim_beginnings == number_of_verbatim_endings:
+if number_of_verbatim_beginnings != number_of_verbatim_endings:
     print("Your number of beginning verbatims do not match the ends.")
     print("Please revise.")
     sys.exit(1)
 else:
     number_of_verbatim = number_of_verbatim_beginnings
 
-verbatim_lengths = [ending_lines_numbers[i] - beginning_lines_numbers[i] for i in range(number_of_verbatim)]
+verbatim_lengths = [(ending_lines_numbers[i] - 1) - beginning_lines_numbers[i] for i in range(number_of_verbatim)]
 
 print(verbatim_lengths)
 
