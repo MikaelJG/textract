@@ -229,14 +229,24 @@ if user_has_three_arguments:
 # # This pattern should be relative
 # awk '/begin{verbat/ { print NR }' "$tex_file" >> begin.txt
 
-pattern = 'begin{verbatim}'
+begin_verbatim_pattern = 'begin{verbatim}'
+end_verbatim_pattern = 'end{verbatim}'
 
 with open(user_tex_file, 'r') as file:
-    lines_with_pattern = [str(idx) for idx, line in enumerate(file, start=1) if pattern in line]
+    beginning_lines_numbers = [str(idx) for idx, line in enumerate(file, start=1) if begin_verbatim_pattern in line]
 
-for line in lines_with_pattern:
+with open(user_tex_file, 'r') as file:
+    ending_lines_numbers = [str(idx) for idx, line in enumerate(file, start=1) if end_verbatim_pattern in line]
+
+for line in beginning_lines_numbers:
+    print("one begins with")
     print(line)
+    print("")
 
+for line in ending_lines_numbers:
+    print("one ends with")
+    print(line)
+    print("")
 
 
 # 
