@@ -33,16 +33,27 @@ def ask_user_about(data, context, mandatory):
             print("Exiting...")
             sys.exit(1)
 
-# ##################################
-# #
-# # Find the right section, given an array of line numbers
-# # This implementation is based on the two crystal ball algorithm puzzle.
-# #
-# # [120,149,220]
-# #
-# # if number is 135, finds section start at 120
-# #
-# ##################################
+# Find the right section for the verbatim start
+# given an array of line numbers
+#  
+# \section{} starts at these lines : 
+# sections = [10, 20, 30, 40, 50, 60, 70, 80, 90]
+# 
+# 
+#\begin{verbatim} starts at this line : 
+# verbatim_starts_at = 45
+#
+# Example usage:
+# sections = [10, 20, 30, 40, 50, 60, 70, 80, 90]
+# result = find_section(verbatim_starts_at, sections)
+#
+# 
+# This implementation is based on the two crystal ball algorithm puzzle.
+# 
+# [120,149,220]
+# if number is 135, finds section start at 120
+#
+#
 
 def find_section(target, section_start_a):
     length = len(section_start_a)
@@ -66,12 +77,6 @@ def find_section(target, section_start_a):
         i += 1
 
     return -1
-
-
-# Example usage:
-# sections = [10, 20, 30, 40, 50, 60, 70, 80, 90]
-# result = find_section(45, sections)
-# print(result)
 
 # Define the paths needed to run this program
 # Give paths the easiest of names
@@ -223,6 +228,17 @@ if user_has_three_arguments:
 # 
 # # This pattern should be relative
 # awk '/begin{verbat/ { print NR }' "$tex_file" >> begin.txt
+
+pattern = 'begin{verbatim}'
+
+with open(user_tex_file, 'r') as file:
+    lines_with_pattern = [str(idx) for idx, line in enumerate(file, start=1) if pattern in line]
+
+for line in lines_with_pattern:
+    print(line)
+
+
+
 # 
 # # This pattern should be relative
 # awk '/end{verbat/ { print NR }' "$tex_file" >> end.txt
