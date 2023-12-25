@@ -78,6 +78,29 @@ def find_section(target, section_start_a):
 
     return -1
 
+def extract_verbatim_sentences(starting_line, verbatim_length):
+    sentences = []
+    with open(user_tex_file, 'r') as file:
+        user_text_lines = file.readlines()
+
+        start_index = starting_line - 1  # Adjusting to 0-based index
+
+        for line_number, line in enumerate(user_text_lines[start_index:], start=start_index + 1):
+            sentences.extend(line.split('. '))  # Split lines into sentences
+            if len(sentences) >= verbatim_length:
+                break
+
+    return sentences[:verbatim_length]
+
+# Example usage:
+file_name = 'your_text_file.txt'  # Replace with your actual file name
+starting_line = 2  # Replace with the starting line number
+num_sentences = 5  # Replace with the number of sentences to extract
+
+resulting_sentences = extract_sentences_after_line(file_name, starting_line, num_sentences)
+print(resulting_sentences)
+
+
 # Define the paths needed to run this program
 # Give paths the easiest of names
 # This will help for the entire length of this program
@@ -248,7 +271,11 @@ else:
 
 verbatim_lengths = [(ending_lines_numbers[i] - 1) - beginning_lines_numbers[i] for i in range(number_of_verbatim)]
 
-print(verbatim_lengths)
+
+
+
+
+
 
 # ##################################
 # #
